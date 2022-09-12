@@ -1,0 +1,36 @@
+@keyframes spinner {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
+.loading-spinner {
+	display: block;
+	width: 1rem;
+	height: 1rem;
+	border: 2px solid #fff;
+	/* border-top-width: 2px;
+	border-top-style: solid; */
+	border-top-color: transparent;
+	border-radius: 50%;
+	animation: spinner 1.2s linear infinite;
+	margin-right: .5rem;
+	background-color: inherit;
+}
+
+.spinner-button {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 8rem;
+	height: auto;
+	padding: 0.8rem 0.5rem;
+	border: 1px solid #fff;
+	border-radius: 8px;
+	background-color: #40005d;
+	color: #fff;
+	font-size: 1rem;
+	font-family: inherit;
+}

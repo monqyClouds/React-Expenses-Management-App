@@ -1,10 +1,13 @@
-import React, {useState} from "react";
+import React, { useState, useContext } from "react";
 
 import NewExpense from "./components/NewExpense/NewExpense";
 import Expenses from "./components/Expenses/Expenses";
-
+import Navigation from "./components/Navigation/Navigation";
+import LoginForm from "./components/Login/LoginForm";
+import AuthContext from "./context/auth-context";
 
 const App = () => {
+	const ctx = useContext(AuthContext)
 	const expenses = [
 		{
 			id: "e1",
@@ -34,18 +37,25 @@ const App = () => {
 
 	const [expenseList, setExpenses] = useState(expenses);
 
-	const addExpenseHandler = expense => {
-		setExpenses(prevExpenses => {
-			return [expense, ...prevExpenses]
+	const addExpenseHandler = (expense) => {
+		setExpenses((prevExpenses) => {
+			return [expense, ...prevExpenses];
 		});
-	}
+	};
 
 	return (
-		<div>
-      <NewExpense onAddExpense={addExpenseHandler} />
-      <Expenses items={expenseList} />
-		</div>
+		<>
+			{ctx.isLoggedIn ? (
+				<div>
+					<Navigation />
+					<NewExpense onAddExpense={addExpenseHandler} />
+					<Expenses items={expenseList} />
+				</div>
+			) : (
+				<LoginForm />
+			)}
+		</>
 	);
-}
+};
 
 export default App;

@@ -1,0 +1,91 @@
+.nav {
+  width: 50rem;
+  max-width: 95%;
+  height: 5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 2rem auto 0;
+  padding: 1rem;
+  background-color:  rgb(31, 31, 31);
+  border-radius: 12px;
+}
+
+.logo {
+  width: max-content;
+  padding: .5rem .8rem;
+  height: auto;
+  border: 1px solid #a892ee;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  font-size: 1.5rem;
+  color: #FFF;
+}
+
+.rightNav {
+  width: max-content;
+  /* min-width: 20rem; */
+  margin-left: auto;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  font-size: 3rem;
+} 
+
+.rightNav > span + * {
+    cursor: pointer;
+}
+
+.user {
+    font-size: 1.2rem;
+    color: #FFF;
+    align-self: flex-end;
+    margin-right: 1.5rem;
+    display: none;
+}
+
+@media screen and (max-width: 450px) {
+    .logo {
+        font-size: 1.2rem;
+    }
+
+    .rightNav {
+        font-size: 2.5rem;
+    }
+
+    .user {
+        font-size: 1rem;
+        margin-right: 1.2rem;
+    }
+}
+
+/* @media screen and (max-width: 370px) {
+    .logo {
+        font-size: 1.5rem;
+    }
+
+    .rightNav {
+        font-size: 3rem;
+    }
+
+    .user {
+        font-size: 1.2rem;
+        margin-right: 1.5rem;
+    }
+} */
+
+/* @media screen and (max-width: 300px) {
+    .logo {
+        font-size: 1.2rem;
+    }
+
+    .rightNav {
+        font-size: 2.5rem;
+    }
+
+    .user {
+        font-size: 1rem;
+        margin-right: 1.2rem;
+    }
+} */
