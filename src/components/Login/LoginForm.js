@@ -9,7 +9,7 @@ const LoginForm = (props) => {
 	const [enteredUsername, setEnteredUsername] = useState("");
 	const [enteredPassword, setEnteredPassword] = useState("");
 	const [isSignin, setIsSignin] = useState(true);
-    const [isLoading, setIsLoading] = useState(false);
+	const [isLoading, setIsLoading] = useState(false);
 
 	const ctx = useContext(AuthContext);
 
@@ -28,7 +28,7 @@ const LoginForm = (props) => {
 
 	const submitHandler = (event) => {
 		event.preventDefault();
-        setIsLoading(true);
+		setIsLoading(true);
 
 		const isValidusername =
 			enteredUsername !== "" && enteredUsername.length <= 15;
@@ -42,26 +42,25 @@ const LoginForm = (props) => {
 			password: enteredPassword,
 		};
 
-        console.log({loginData});
-
 		switch (isSignin) {
 			case true:
-                console.log("sign in handler");
-				ctx.onLogin();
+				console.log("sign in handler");
+				ctx.onLogin(loginData, true);
 				break;
 
 			case false:
-                console.log("sign up handler");
-				// props.onSignup(loginData);
+				console.log("sign up handler");
+				ctx.onSignup(loginData, false);
 				break;
 
 			default:
 				break;
 		}
 
-		// !props.isError && setEnteredPassword("");
-		// !props.isError && setEnteredUsername("");
-        setIsLoading(false);
+		!ctx.isLoginError && setEnteredPassword("");
+		!ctx.isLoginError && setEnteredUsername("");
+
+		setIsLoading(false);
 	};
 
 	return (
@@ -94,9 +93,11 @@ const LoginForm = (props) => {
 							required
 						/>
 					</div>
-					<p className={classes.notification}>
-						<BiError /> <span>Invalid details</span>
-					</p>
+					{ctx.isLoginError && (
+						<p className={classes.notification}>
+							<BiError /> <span>{ctx.errorMsg}</span>
+						</p>
+					)}
 				</div>
 				<div className={classes.formActions}>
 					<SpinnerButton
