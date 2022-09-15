@@ -2,7 +2,6 @@ import { createContext, useReducer, useEffect } from "react";
 
 const ExpenseContext = createContext({
 	expenses: [],
-	totalExpenses: 0,
 	populateExpenses: () => {},
 	addExpense: () => {},
 	removeExpense: () => {},
@@ -32,29 +31,22 @@ const expenseReducer = (state, action) => {
 		success = true;
 	} else if (action.type === "POPULATE_EXPENSE") {
 		const expenses = JSON.parse(localStorage.getItem("expenses"));
-		const totalExpenses =
-			JSON.parse(localStorage.getItem("totalExpenses")) ?? 0;
 
-        expenses.forEach(expense => {
-            expense.date = new Date(expense.date);
-        });
+		expenses.forEach((expense) => {
+			expense.date = new Date(expense.date);
+		});
 
-		return {
-			expenses,
-			totalExpenses,
-		};
+		return { expenses }
 	}
 
 	if (success) {
 		localStorage.setItem("expenses", JSON.stringify(state.expenses));
-		localStorage.setItem("totalExpense", `${state.totalExpenses}`);
 	}
 };
 
 export const ExpenseContextProvider = (props) => {
 	const [expenseState, dispatchExpense] = useReducer(expenseReducer, {
-		expenses: [],
-		totalExpenses: 0,
+		expenses: []
 	});
 
 	const addExpenseHandler = (expense) => {

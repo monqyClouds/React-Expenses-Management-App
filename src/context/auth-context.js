@@ -35,7 +35,6 @@ export const AuthContextProvider = (props) => {
 		if (data.name) {
 			localStorage.setItem("isLoggedIn", "1");
 			localStorage.setItem("expenses", JSON.stringify(data.expenses));
-			localStorage.setItem("totalExpense", JSON.stringify(data.totalExpenses));
 			setIsLoginError(false);
 			setErrorMsg("");
 			setIsLoggedIn(true);
@@ -63,65 +62,66 @@ export const AuthContextProvider = (props) => {
 
 async function fetchUserData(userData, isSignin = true) {
 	// Fetch User Data
-	if (!isSignin) {
-		console.log(userData);
-		try {
-			const res = await fetch("http://localhost:8000/user", {
+	console.log(userData);
+	try {
+		const res = await fetch(
+			`http://localhost:8000/user/${isSignin ? "signin" : "signup"}`,
+			{
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
 				},
 				body: JSON.stringify(userData),
-			});
-
-			const resData = await res.json();
-
-			if (!res.ok) {
-				throw new Error(resData);
 			}
+		);
 
-			return {
-				name: resData.username,
-				expenses: [],
-				totalExpenses: 0,
-			};
-		} catch (err) {
-			return { errRes: err.message };
+		const resData = await res.json();
+
+		if (!res.ok) {
+			throw new Error(resData);
 		}
-	} else {
 
-        
 		return {
-			name: "Qing",
-			expenses: [
-				{
-					id: "e1",
-					title: "Toilet Paper",
-					amount: 94.12,
-					date: new Date(2022, 7, 10),
-				},
-				{
-					id: "e2",
-					title: "New TV",
-					amount: 799.49,
-					date: new Date(2021, 2, 8),
-				},
-				{
-					id: "e3",
-					title: "Car Insurance",
-					amount: 295.85,
-					date: new Date(2021, 8, 16),
-				},
-				{
-					id: "e4",
-					title: "Groceries",
-					amount: 102.75,
-					date: new Date(2021, 9, 11),
-				},
-			],
-			totalExpenses: 0,
+			name: resData.username,
+			expenses: resData.expenses ?? [],
 		};
+	} catch (err) {
+		return { errRes: err.message };
 	}
+
+	// if (!isSignin) {
+
+	// } else {
+	// 	return {
+	// 		name: "Qing",
+	// 		expenses: [
+	// 			{
+	// 				id: "e1",
+	// 				title: "Toilet Paper",
+	// 				amount: 94.12,
+	// 				date: new Date(2022, 7, 10),
+	// 			},
+	// 			{
+	// 				id: "e2",
+	// 				title: "New TV",
+	// 				amount: 799.49,
+	// 				date: new Date(2021, 2, 8),
+	// 			},
+	// 			{
+	// 				id: "e3",
+	// 				title: "Car Insurance",
+	// 				amount: 295.85,
+	// 				date: new Date(2021, 8, 16),
+	// 			},
+	// 			{
+	// 				id: "e4",
+	// 				title: "Groceries",
+	// 				amount: 102.75,
+	// 				date: new Date(2021, 9, 11),
+	// 			},
+	// 		],
+	// 	};
+	// }
 }
 
 export default AuthContext;
