@@ -8,9 +8,9 @@ const ExpensesList = (props) => {
 
 	return (
 		<ul className="expenses-list">
-			{props.items.map((expense) => (
+			{props.items.map((expense, i) => (
 				<ExpenseItem
-					key={expense.id} //Always use key tag when working with list items
+					key={expense.id ?? i} //Always use key tag when working with list items
 					title={expense.title}
 					amount={expense.amount}
 					date={expense.date}

@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import ExpenseContext from "../../context/expense-context";
 
 import "./ExpenseForm.css";
 
@@ -6,6 +7,7 @@ const ExpenseForm = (props) => {
 	const [enteredTitle, setEnteredTitle] = useState("");
 	const [enteredAmount, setEnteredAmount] = useState("");
 	const [enteredDate, setEnteredDate] = useState("");
+  const ctx = useContext(ExpenseContext)
 
 	const titleChangeHandler = (event) => {
 		setEnteredTitle(event.target.value);
@@ -28,12 +30,14 @@ const ExpenseForm = (props) => {
 			date: new Date(enteredDate),
 		};
 
-		props.onSaveExpenseData(expenseData);
+		ctx.onAddExpense(expenseData);
 
 		setEnteredTitle("");
 		setEnteredAmount("");
 		setEnteredDate("");
 	};
+
+  const currentYear = ctx.earliestYear;
 
 	// const [userInput, setUserInput] = useState({
 	//   enteredTitle: '',
@@ -79,7 +83,7 @@ const ExpenseForm = (props) => {
 					<input
 						type="date"
 						min="2019-01-01"
-						max="2022-12-31"
+						max={`${currentYear}-12-31`}
 						value={enteredDate}
 						onChange={dateChangeHandler}
 					/>

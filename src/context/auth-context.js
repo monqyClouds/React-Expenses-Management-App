@@ -20,16 +20,19 @@ export const AuthContextProvider = (props) => {
 		if (storedSession === "1") setIsLoggedIn(true);
 	}, []);
 
-	const logoutHandler = () => {
-		// Logout API
+	const logoutHandler = async () => {
+		const res = await fetch("http://localhost:8000/user/logout");
+
+		if (!res.ok) {
+			return;
+		}
+
 		localStorage.clear();
 		setIsLoginError(false);
 		setIsLoggedIn(false);
 	};
 
 	const loginHandler = async (userData, isSignin) => {
-		console.log({ userData, isSignin });
-		// Login API
 		const data = await fetchUserData(userData, isSignin);
 
 		if (data.name) {
@@ -68,8 +71,11 @@ async function fetchUserData(userData, isSignin = true) {
 			`http://localhost:8000/user/${isSignin ? "signin" : "signup"}`,
 			{
 				method: "POST",
+				// credentials: "include",
 				headers: {
 					"Content-Type": "application/json",
+					// "Access-Control-Allow-Credentials": true,
+					// "Access-Control-Allow-Origin": "http://localhost:8000",
 				},
 				body: JSON.stringify(userData),
 			}
@@ -89,11 +95,6 @@ async function fetchUserData(userData, isSignin = true) {
 		return { errRes: err.message };
 	}
 
-	// if (!isSignin) {
-
-	// } else {
-	// 	return {
-	// 		name: "Qing",
 	// 		expenses: [
 	// 			{
 	// 				id: "e1",
@@ -101,27 +102,7 @@ async function fetchUserData(userData, isSignin = true) {
 	// 				amount: 94.12,
 	// 				date: new Date(2022, 7, 10),
 	// 			},
-	// 			{
-	// 				id: "e2",
-	// 				title: "New TV",
-	// 				amount: 799.49,
-	// 				date: new Date(2021, 2, 8),
-	// 			},
-	// 			{
-	// 				id: "e3",
-	// 				title: "Car Insurance",
-	// 				amount: 295.85,
-	// 				date: new Date(2021, 8, 16),
-	// 			},
-	// 			{
-	// 				id: "e4",
-	// 				title: "Groceries",
-	// 				amount: 102.75,
-	// 				date: new Date(2021, 9, 11),
-	// 			},
 	// 		],
-	// 	};
-	// }
 }
 
 export default AuthContext;
