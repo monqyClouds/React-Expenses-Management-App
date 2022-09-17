@@ -152,9 +152,10 @@ async function expenseRequest(expenseData, isAddExpense) {
 	try {
 		const res = await fetch("http://localhost:8000/expense", {
 			method: isAddExpense ? "POST" : "DELETE",
-			// credentials: "include",
+			credentials: "include",
 			headers: {
 				"Content-Type": "application/json",
+				"Access-Control-Allow-Credentials": true,
 			},
 			body: JSON.stringify(requestData),
 		});

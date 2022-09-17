@@ -44,12 +44,10 @@ const LoginForm = (props) => {
 
 		switch (isSignin) {
 			case true:
-				console.log("sign in handler");
 				ctx.onLogin(loginData, true);
 				break;
 
 			case false:
-				console.log("sign up handler");
 				ctx.onSignup(loginData, false);
 				break;
 

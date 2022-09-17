@@ -65,17 +65,15 @@ export const AuthContextProvider = (props) => {
 
 async function fetchUserData(userData, isSignin = true) {
 	// Fetch User Data
-	console.log(userData);
 	try {
 		const res = await fetch(
 			`http://localhost:8000/user/${isSignin ? "signin" : "signup"}`,
 			{
 				method: "POST",
-				// credentials: "include",
+				credentials: "include",
 				headers: {
 					"Content-Type": "application/json",
-					// "Access-Control-Allow-Credentials": true,
-					// "Access-Control-Allow-Origin": "http://localhost:8000",
+					"Access-Control-Allow-Credentials": true,
 				},
 				body: JSON.stringify(userData),
 			}

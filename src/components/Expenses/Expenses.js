@@ -20,11 +20,7 @@ function Expenses() {
 		setFilteredYear(selectedYear);
 	};
 
-	console.log({filteredYear})
-
 	let filteredExpenses = [];
-
-	console.log(ctx);
 
 	if (ctx.expenses) {
 		filteredExpenses = ctx.expenses.filter((el) => {
